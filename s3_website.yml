@@ -1,0 +1,21 @@
+s3_bucket: josephgruber.com
+
+gzip: true
+
+max_age:
+  "images/*": 31536000
+  "assets/*": 31536000
+  "*": 14400
+
+cloudfront_distribution_id: <%= ENV['CLOUDFRONT_ID'] %>
+cloudfront_invalidate_root: true
+cloudfront_wildcard_invalidation: true
+cloudfront_distribution_config:
+  default_cache_behavior:
+    min_ttl: <%= 60 * 60 * 24 %>
+  http_version: http2
+
+extensionless_mime_type: text/html
+
+exclude_from_upload:
+  - \.DS_Store

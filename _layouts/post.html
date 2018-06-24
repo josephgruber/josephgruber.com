@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="{{ page.date | date: "%Y-%m-%d %H:%M" }}" class="post-meta__date date">{{ page.date | date_to_string }}</time>
+    </div>
+    <h1 class="post-title">{{ page.title }}</h1>
+  </header>
+
+  <section class="post">
+    {% if page.image.filename %}
+    {% if page.image.caption %}<figure>{% endif %}
+    <img src="{{ page.image.filename | prepend: "/" | prepend: site.imgurl }}" alt="{% if page.image.alt %}{{ page.image.alt }}{% else %}{{ page.title }}{% endif %}" title="{% if page.image.caption %}{{ page.image.caption }}{% else %}{{ page.title }}{% endif %}" class="center">
+    {% if page.image.caption %}<figcaption>
+    {% if page.image.url %}<a href="{{ page.image.url }}" target="_blank" rel="noopener">{% endif %}{{ page.image.caption }}{% if page.image.url %}</a>{% endif %}{% if page.image.author.name %} by {% if page.image.author.link %}<a href="{{ page.image.author.link }}" target="_blank" rel="noopener">{% endif %}{{ page.image.author.name}}{% if page.image.author.link %}</a>{% endif %}{% endif %}{% if page.image.license.type %} is licensed under {% if page.image.license.link %}<a href="{{ page.image.license.link }}" target="_blank" rel="noopener">{% endif %}{{ page.image.license.type }}{% if page.image.license.link %}</a>{% endif %}{% endif %}
+    </figcaption>
+    </figure>
+    {% else %}
+    <p />
+    {% endif %}
+    {% endif %}
+
+    {{ content }}
+  </section>
+</article>

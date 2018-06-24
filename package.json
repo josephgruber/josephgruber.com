@@ -1,0 +1,29 @@
+{
+  "name": "josephgruber.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/joseph.gruber/josephgruber.com.git"
+  },
+  "author": "Joseph Gruber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/joseph.gruber/josephgruber.com/issues"
+  },
+  "homepage": "https://gitlab.com/joseph.gruber/josephgruber.com#README",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-download": "0.0.1",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-rename": "^1.3.0",
+    "imagemin": "^5.3.1",
+    "imagemin-mozjpeg": "^7.0.0",
+    "vinyl-paths": "^2.1.0"
+  }
+}

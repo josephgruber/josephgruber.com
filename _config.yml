@@ -1,0 +1,60 @@
+title: JosephGruber.com
+description: 'Aerospace Engineering Manager ~ Space Geek ~ Pilot ~ Photographer'
+headline: 'Aerospace Engineering Manager ~ Space Geek ~ Pilot ~ Photographer'
+
+url: 'https://josephgruber.com'
+baseurl: ''
+asseturl: '/assets'
+jsurl: '/assets/js'
+pdfurl: '/assets/pdf'
+imgurl: '/assets/img'
+
+
+google_analytics: 'UA-12826609-1'
+
+author:
+  name: 'Joseph Gruber'
+  email: joseph.gruber@gmail.com
+  twitter_username: josephgruber
+  facebook_username: joseph.gruber
+  instagram_username: josephgruber
+  linkedin_username:  josephgruber
+
+facebook:
+  publisher: 1065184637
+  admins: 1065184637
+
+social:
+  links:
+    - https://twitter.com/josephgruber
+    - https://www.facebook.com/joseph.gruber
+    - https://www.linkedin.com/in/josephgruber
+    - https://www.instagram.com/josephgruber/
+    - https://keybase.io/josephgruber
+    - https://gitlab.com/joseph.gruber
+
+defaults:
+  -
+    scope:
+      path: ''
+      type: 'posts'
+    values:
+        layout: 'post'
+
+# Build settings
+destination: _site
+paginate: 10
+permalink: /:year/:title/
+markdown: kramdown
+highlighter: rouge
+future: false
+
+sass:
+    sass_dir: _sass
+    style: compressed
+
+kramdown:
+  input: GFM
+
+plugins: ['jekyll-paginate', 'jekyll-sitemap']
+exclude: ['Gemfile', 'Gemfile.lock', '.DS_Store', 's3_website.yml', 'template.md', 'package.json', 'package-lock.json', 'node_modules', 'gulpfile.js']

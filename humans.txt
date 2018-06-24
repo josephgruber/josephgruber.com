@@ -1,0 +1,11 @@
+---
+layout: null
+sitemap:
+    exclude: 'yes'
+robots: noindex
+---
+
+Cover Image: NASA
+Site Template: Josh Gerdes (@joshgerdes), http://joshgerdes.com and Dale Anthony
+
+Last update: {{ site.time | date: "%Y/%m/%d" }}
