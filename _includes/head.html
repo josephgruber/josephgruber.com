@@ -1,7 +1,7 @@
 <head>
   {% if site.google_analytics %}
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="{{ site.jsurl }}/google-analytics.js"></script>
+  <script async src="{{ site.asseturl }}/js/google-analytics.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -26,35 +26,36 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <link rel="apple-touch-icon" sizes="57x57" href="{{ site.baseurl }}/images/favicons/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="{{ site.baseurl }}/images/favicons/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="{{ site.baseurl }}/images/favicons/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{ site.baseurl }}/images/favicons/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="{{ site.baseurl }}/images/favicons/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="{{ site.baseurl }}/images/favicons/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="{{ site.baseurl }}/images/favicons/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="{{ site.baseurl }}/images/favicons/apple-icon-152x152.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/images/favicons/apple-icon-180x180.png">
-  <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicons/favicon-16x16.png" sizes="16x16">
-  <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicons/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicons/favicon-96x96.png" sizes="96x96">
-  <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicons/favicon-128x128.png" sizes="128x128">
-  <link rel="icon" type="image/png" href="{{ site.baseurl }}/images/favicons/favicon-196x196.png" sizes="196x196">
-  <link rel="manifest" href="{{ site.baseurl }}/images/favicons/manifest.json">
-  <link rel="shortcut icon" href="{{ site.baseurl }}/images/favicons/favicon.ico">
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ site.asseturl }}/img/favicons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ site.asseturl }}/img/favicons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ site.asseturl }}/img/favicons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ site.asseturl }}/img/favicons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ site.asseturl }}/img/favicons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ site.asseturl }}/img/favicons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ site.asseturl }}/img/favicons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ site.asseturl }}/img/favicons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.asseturl }}/img/favicons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" href="{{ site.asseturl }}/img/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="{{ site.asseturl }}/img/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ site.asseturl }}/img/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ site.asseturl }}/img/favicons/favicon-128x128.png" sizes="128x128">
+  <link rel="icon" type="image/png" href="{{ site.asseturl }}/img/favicons/favicon-196x196.png" sizes="196x196">
+  <link rel="manifest" href="{{ site.asseturl }}/img/favicons/manifest.json">
+  <link rel="shortcut icon" href="{{ site.asseturl }}/img/favicons/favicon.ico">
   <meta name="msapplication-TileColor" content="#ffc40d">
-  <meta name="msapplication-TileImage" content="{{ site.baseurl }}/images/favicons/ms-icon-144x144.png">
+  <meta name="msapplication-TileImage" content="{{ site.asseturl }}/img/favicons/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
-  <!-- <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" media="screen"> -->
-  <link rel="preload" as="style" href="{{ site.baseurl }}/css/main.css" onload="this.rel='stylesheet'">
+  <style>{% include critical.css %}</style>
+  <link rel="preload" as="style" href="{{ site.asseturl }}/style/main.css" onload="this.rel='stylesheet'">
+
   <link rel="canonical" href="{% if page.canonical %}{{ page.canonical }}{% else %}{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}{% endif %}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}/feed.xml">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html }}{% else %}{{ site.description }}{% endif %}">
-  <meta name="twitter:image" content="{{ site.baseurl }}/images/favicons/favicon-196x196.png" />
+  <meta name="twitter:image" content="{{ site.asseturl }}/img/favicons/favicon-196x196.png" />
   {% if site.author.twitter_username %}
   <meta name="twitter:creator" content="{{ site.author.twitter_username }}">
   <meta name="twitter:site" content="{{ site.author.twitter_username }}">
@@ -64,7 +65,7 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html }}{% else %}{{ site.description }}{% endif %}">
-  <meta property="og:image" content="{{ site.baseurl }}/images/favicons/favicon-196x196.png" />
+  <meta property="og:image" content="{{ site.asseturl }}/img/favicons/favicon-196x196.png" />
   <meta property="og:url" content="{% if page.canonical %}{{ page.canonical }}{% else %}{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}{% endif %}" />
   <meta property="og:site_name" content="{{ site.title }}" />
 

@@ -25,4 +25,4 @@ So back to the drawing board. I've already decided to move the time back one hou
 
 **Attempt 2 Update:** This should do just fine! (Note, this is only a rough draft of the first shot of 52)
 
-<img title="Sun over the Tidal Basin in Washington, DC" src="{{ site.imgurl }}/JosephGruber_20150308_00037-Edit.jpg" alt="Sun over the Tidal Basin in Washington, DC" />
+<img title="Sun over the Tidal Basin in Washington, DC" src="{{ site.asseturl }}/img/JosephGruber_20150308_00037-Edit.jpg" alt="Sun over the Tidal Basin in Washington, DC" />

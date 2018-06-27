@@ -17,66 +17,66 @@ So, over the long Veterans Day weekend I took a trip out to Seattle and was asto
 Enjoy some of the photos from trip above and if you ever get the chance, go visit Seattle yourself!
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00134-Edit.jpg" class="center" alt="Mt Rainier as seen behind the cargo cranes of the Port of Seattle">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00134-Edit.jpg" class="center" alt="Mt Rainier as seen behind the cargo cranes of the Port of Seattle">
     <figcaption>Mt Rainier as seen behind the cargo cranes of the Port of Seattle</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00075-Edit.jpg" class="center" alt="The Seattle waterfront near Pike Place Market looking over the ferris wheel tourist attraction with Mt Rainier in the background">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00075-Edit.jpg" class="center" alt="The Seattle waterfront near Pike Place Market looking over the ferris wheel tourist attraction with Mt Rainier in the background">
     <figcaption>The Seattle waterfront near Pike Place Market looking over the ferris wheel tourist attraction with Mt Rainier in the background</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00047.jpg" class="center" alt="Tossing fish around at the Pike Place Fish Market">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00047.jpg" class="center" alt="Tossing fish around at the Pike Place Fish Market">
     <figcaption>Tossing fish around at the Pike Place Fish Market</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00134-Edit.jpg" class="center" alt="Mt Rainier as seen behind the cargo cranes of the Port of Seattle">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00134-Edit.jpg" class="center" alt="Mt Rainier as seen behind the cargo cranes of the Port of Seattle">
     <figcaption>Mt Rainier as seen behind the cargo cranes of the Port of Seattle</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00075-Edit.jpg" class="center" alt="The Seattle waterfront near Pike Place Market looking over the ferris wheel tourist attraction with Mt Rainier in the background">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00075-Edit.jpg" class="center" alt="The Seattle waterfront near Pike Place Market looking over the ferris wheel tourist attraction with Mt Rainier in the background">
     <figcaption>The Seattle waterfront near Pike Place Market looking over the ferris wheel tourist attraction with Mt Rainier in the background</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00047.jpg" class="center" alt="Tossing fish around at the Pike Place Fish Market">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00047.jpg" class="center" alt="Tossing fish around at the Pike Place Fish Market">
     <figcaption>Tossing fish around at the Pike Place Fish Market</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141108_00040.jpg" class="center" alt="Pike Place Market">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141108_00040.jpg" class="center" alt="Pike Place Market">
     <figcaption>Pike Place Market</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141109_00074.jpg" class="center" alt="An American Airlines Boeing 777 is just inches above the runway as it lands after coming back from a pre-delivery factory test flight">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141109_00074.jpg" class="center" alt="An American Airlines Boeing 777 is just inches above the runway as it lands after coming back from a pre-delivery factory test flight">
     <figcaption>An American Airlines Boeing 777 is just inches above the runway as it lands after coming back from a pre-delivery factory test flight</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141109_00082.jpg" class="center" alt="Factory test flight of the American Airlines 777-323">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141109_00082.jpg" class="center" alt="Factory test flight of the American Airlines 777-323">
     <figcaption>Factory test flight of the American Airlines 777-323</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141110_00001.jpg" class="center" alt="Mt St Helens seen from a distance at the Mt St Helens Visitor Center">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141110_00001.jpg" class="center" alt="Mt St Helens seen from a distance at the Mt St Helens Visitor Center">
     <figcaption>Mt St Helens seen from a distance at the Mt St Helens Visitor Center</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141110_00013.jpg" class="center" alt="Reflection of the blue, cloudy skies at Silver Lake near Mt St Helens">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141110_00013.jpg" class="center" alt="Reflection of the blue, cloudy skies at Silver Lake near Mt St Helens">
     <figcaption>Reflection of the blue, cloudy skies at Silver Lake near Mt St Helens</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141110_00032-Edit.jpg" class="center" alt="Sunset at Alder Lake near Mt Rainier National Park">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141110_00032-Edit.jpg" class="center" alt="Sunset at Alder Lake near Mt Rainier National Park">
     <figcaption>Sunset at Alder Lake near Mt Rainier National Park</figcaption>
 </figure>
 
 <figure>
-    <img src="{{ site.imgurl }}/JosephGruber_20141111_01957.jpg" class="center" alt="Is the mountain out? Sure is!">
+    <img src="{{ site.asseturl }}/img/JosephGruber_20141111_01957.jpg" class="center" alt="Is the mountain out? Sure is!">
     <figcaption>Is the mountain out? Sure is!</figcaption>
 </figure>

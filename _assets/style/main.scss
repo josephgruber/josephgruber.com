@@ -1,8 +1,7 @@
----
----
-@import "uno";
-@import "tables";
-@import "monokai";
+@import "scss/uno";
+@import "scss/tables";
+@import "scss/monokai";
+@import "scss/animate";
 
 /* Modifications */
 pre.highlight,

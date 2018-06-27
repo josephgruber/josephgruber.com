@@ -3,9 +3,8 @@ s3_bucket: josephgruber.com
 gzip: true
 
 max_age:
-  "images/*": 31536000
-  "assets/*": 31536000
-  "*": 14400
+  'assets/*': 31536000
+  '*': 14400
 
 cloudfront_distribution_id: <%= ENV['CLOUDFRONT_ID'] %>
 cloudfront_invalidate_root: true
