@@ -13,6 +13,8 @@
       {% include footer.html %}
     </div>
 
-    <script src="{{ site.asseturl }}/js/main.js"></script>
-  </body>
+    <script src="{{ site.asseturl }}/js/main.js" async></script>
+
+    <link rel="preload" as="style" href="{{ site.asseturl }}/style/main.css" onload="this.rel='stylesheet'">
+    </body>
 </html>

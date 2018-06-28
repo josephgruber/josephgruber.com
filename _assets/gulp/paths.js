@@ -39,6 +39,7 @@ paths.siteFontFiles  = paths.siteAssetsDir + paths.fontFolderName;
 paths.sassPattern     = '/**/*.scss';
 paths.jsPattern       = '/**/*.js';
 paths.imagePattern    = '/**/*.+(jpg|JPG|jpeg|JPEG|png|PNG|svg|SVG|gif|GIF|webp|WEBP|tif|TIF)';
+paths.fontPattern     = '/**/*.+(ttf|TTF|woff|WOFF|woff2|WOFF2|svg|SVG|eot|EOT)';
 paths.markdownPattern = '/**/*.+(md|MD|markdown|MARKDOWN)';
 paths.htmlPattern     = '/**/*.html';
 paths.xmlPattern      = '/**/*.xml';
@@ -47,6 +48,7 @@ paths.xmlPattern      = '/**/*.xml';
 paths.sassFilesGlob  = paths.sassFiles  + paths.sassPattern;
 paths.jsFilesGlob    = paths.jsFiles    + paths.jsPattern;
 paths.imageFilesGlob = paths.imageFiles + paths.imagePattern;
+paths.fontFilesGlob  = paths.fontFiles  + paths.fontPattern;
 
 // Jekyll files globs
 paths.jekyllPostFilesGlob  = paths.jekyllPostFiles  + paths.markdownPattern;
