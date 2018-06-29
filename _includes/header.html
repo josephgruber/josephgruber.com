@@ -8,7 +8,12 @@
     <div class="panel-main__inner panel-inverted">
       <div class="panel-main__content">
         <a href="{{ site.baseurl }}/" title="Link to JosephGruber.com">
-          <img src="{{ site.asseturl }}/img/profile.png" class="user-image" alt="Bitmoji photo of {{ site.author.name }}">
+          <picture>
+            <source srcset="{{ site.asseturl }}/img/profile.webp" type="image/webp">
+            <source srcset="{{ site.asseturl }}/img/profile.png" type="image/jpeg">
+            <img src="{{ site.asseturl }}/img/profile.png" class="user-image" alt="Bitmoji photo of {{ site.author.name }}">
+          </picture>
+
           <h1 class="panel-cover__title panel-title">{{ site.author.name }}</h1>
         </a>
         <hr class="panel-cover__divider">

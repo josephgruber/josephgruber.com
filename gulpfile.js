@@ -13,11 +13,11 @@ var log           = require('fancy-log');
 var mozjpeg       = require('imagemin-mozjpeg');
 var postcss       = require('gulp-postcss');
 var rename        = require('gulp-rename');
-var runSequence   = require('run-sequence');
 var sass          = require('gulp-ruby-sass');
 var uglify        = require('gulp-uglify');
 var uncss         = require('postcss-uncss');
 var vinylPaths    = require('vinyl-paths');
+var webp          = require('imagemin-webp');
 
 // Include paths file.
 var paths = require('./_assets/gulp/paths.js');
@@ -39,7 +39,7 @@ gulp.task('build:styles', function() {
 
 // Builds critical CSS, to be included in head.html.
 gulp.task('build:styles:critical', function() {
-  critical.generate({
+  return critical.generate({
     base: '_site/',
     src: 'index.html',  // Extract critical path CSS for index.html
     css: [paths.jekyllCssFiles + '/main.css'],
@@ -55,7 +55,8 @@ gulp.task('build:styles:uncss', function() {
   return gulp.src(paths.siteCssFiles + '/main.css')
     .pipe(postcss([uncss({
       html: ['./_site/**/*.html'],
-      htmlroot: paths.siteDir
+      htmlroot: paths.siteDir,
+      ignore: ['.webp .panel-cover', '.no-webp .panel-cover']
     })]))
     .pipe(gulp.dest(paths.jekyllCssFiles))
     .pipe(gulp.dest(paths.siteCssFiles))
@@ -127,7 +128,7 @@ gulp.task('clean:scripts', function(done) {
 });
 
 // Builds all scripts.
-gulp.task('build:scripts', ['build:scripts:main', 'build:scripts:analytics']);
+gulp.task('build:scripts', gulp.parallel('build:scripts:main', 'build:scripts:analytics'));
 
 // Optimizes images.
 gulp.task('build:images:main', function() {
@@ -143,6 +144,19 @@ gulp.task('build:images:main', function() {
     .pipe(browserSync.stream());
 });
 
+// Convert all png and jpg images to WebP format
+gulp.task('build:images:webp', function() {
+  return gulp.src(paths.jekyllImageFilesGlob)
+    .pipe(imagemin([
+      webp()
+    ]))
+    .pipe(rename({ extname: '.webp' }))
+    .pipe(gulp.dest(paths.jekyllImageFiles))
+    .pipe(gulp.dest(paths.siteImageFiles))
+    .pipe(browserSync.stream());
+});
+
+// Copy favicon and manifests to image directories
 gulp.task('build:images:manifest', function() {
   return gulp.src(paths.imageFiles + '/favicons/+(manifest.json|browserconfig.xml|favicon.ico)')
     .pipe(gulp.dest(paths.jekyllImageFiles + '/favicons/'))
@@ -157,7 +171,7 @@ gulp.task('clean:images', function(done) {
 });
 
 // Builds all images
-gulp.task('build:images', ['build:images:main', 'build:images:manifest']);
+gulp.task('build:images', gulp.series('build:images:main', gulp.parallel('build:images:webp', 'build:images:manifest')));
 
 // Places fonts in proper location.
 gulp.task('build:fonts', function() {
@@ -174,7 +188,7 @@ gulp.task('clean:fonts', function(done) {
   done();
 });
 
-gulp.task('build:compress', ['build:styles:compress', 'build:scripts:compress:main', 'build:scripts:compress:analytics']);
+gulp.task('build:compress', gulp.parallel('build:styles:compress', 'build:scripts:compress:main', 'build:scripts:compress:analytics'));
 
 gulp.task('build:jekyll', function(done) {
   return cp.spawn('bundle', ['exec', 'jekyll', 'build'], {stdio: 'inherit'})
@@ -194,35 +208,27 @@ gulp.task('clean:jekyll', function(done) {
 
 // Main clean task.
 // Deletes _site directory and processed assets.
-gulp.task('clean', ['clean:jekyll',
-  'clean:images',
-  'clean:scripts',
-  'clean:fonts',
-  'clean:styles']);
+gulp.task('clean', gulp.parallel('clean:jekyll', 'clean:images', 'clean:scripts', 'clean:fonts', 'clean:styles'));
 
 // Builds site anew.
-gulp.task('build', function(done) {
-  runSequence('clean', ['build:scripts', 'build:images', 'build:styles', 'build:fonts'], 'build:jekyll', 'build:styles:uncss', 'build:compress', 'deploy:aws', done);
-});
+gulp.task('build', gulp.series('clean', gulp.parallel('build:scripts', 'build:images', 'build:styles', 'build:fonts'), 'build:jekyll', 'build:styles:uncss', 'build:compress', 'deploy:aws'));
 
 // Builds site anew.
-gulp.task('build-dev', function(done) {
-  runSequence('clean', ['build:scripts', 'build:images', 'build:styles', 'build:fonts'], 'build:jekyll', 'build:styles:uncss', done);
-});
+gulp.task('build-dev', gulp.series('clean', gulp.parallel('build:scripts', 'build:images', 'build:styles', 'build:fonts'), 'build:jekyll', 'build:styles:uncss'));
 
 // Special tasks for building and then reloading BrowserSync.
-gulp.task('build:jekyll:watch', ['build:jekyll'], function(done) {
+gulp.task('build:jekyll:watch', gulp.series('build:jekyll', function(done) {
   browserSync.reload();
   done();
-});
+}));
 
-gulp.task('build:scripts:watch', ['build:scripts'], function(done) {
+gulp.task('build:scripts:watch', gulp.series('build:scripts', function(done) {
   browserSync.reload();
   done();
-});
+}));
 
 // Static Server + watching files.
-gulp.task('serve', ['build-dev'], function() {
+gulp.task('serve', gulp.series('build-dev', function() {
   browserSync.init({
     server: paths.siteDir,
     ghostMode: false, // Toggle to mirror clicks, reloads etc. (performance)
@@ -232,23 +238,23 @@ gulp.task('serve', ['build-dev'], function() {
   });
 
   // Watch site settings.
-  gulp.watch(['_config.yml'], ['build:jekyll:watch']);
+  gulp.watch('_config.yml', gulp.parallel('build:jekyll:watch'));
 
   // Watch .scss files; changes are piped to browserSync.
-  gulp.watch('_assets/style/**/*.scss', ['build:styles']);
+  gulp.watch('_assets/style/**/*.scss', gulp.parallel('build:styles'));
 
   // Watch .js files.
-  gulp.watch('_assets/js/**/*.js', ['build:scripts:watch']);
+  gulp.watch('_assets/js/**/*.js', gulp.parallel('build:scripts:watch'));
 
   // Watch image files; changes are piped to browserSync.
-  gulp.watch('_assets/img/**/*', ['build:images']);
+  gulp.watch('_assets/img/**/*', gulp.parallel('build:images'));
 
   // Watch posts.
-  gulp.watch('_posts/**/*.+(md|markdown|MD)', ['build:jekyll:watch']);
+  gulp.watch('_posts/**/*.+(md|markdown|MD)', gulp.parallel('build:jekyll:watch'));
 
   // Watch html and markdown files.
-  gulp.watch(['**/*.+(html|md|markdown|MD)', '!_site/**/*.*'], ['build:jekyll:watch']);
-});
+  gulp.watch(['**/*.+(html|md|markdown|MD)', '!_site/**/*.*'], gulp.parallel('build:jekyll:watch'));
+}));
 
 // Default Task: builds site.
-gulp.task('default', ['build']);
+gulp.task('default', gulp.series('build'));
