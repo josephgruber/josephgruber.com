@@ -56,7 +56,7 @@ gulp.task('build:styles:uncss', function() {
     .pipe(postcss([uncss({
       html: ['./_site/**/*.html'],
       htmlroot: paths.siteDir,
-      ignore: ['.webp .panel-cover', '.no-webp .panel-cover']
+      ignore: ['.webp .panel-cover', '.no-webp .panel-cover', '.animated', '.fadeIn', '.bounceInDown', '.navigation-wrapper.visible']
     })]))
     .pipe(gulp.dest(paths.jekyllCssFiles))
     .pipe(gulp.dest(paths.siteCssFiles))
