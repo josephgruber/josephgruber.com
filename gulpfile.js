@@ -13,6 +13,8 @@ var log           = require('fancy-log');
 var mozjpeg       = require('imagemin-mozjpeg');
 var postcss       = require('gulp-postcss');
 var rename        = require('gulp-rename');
+var rev           = require('gulp-rev');
+var revRewrite    = require('gulp-rev-rewrite');
 var sass          = require('gulp-ruby-sass');
 var uglify        = require('gulp-uglify');
 var uncss         = require('postcss-uncss');
@@ -31,8 +33,14 @@ gulp.task('build:styles', function() {
     loadPath: [paths.sassFiles]
   }).pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
     .pipe(cleancss())
+    .pipe(rev())
     .pipe(gulp.dest(paths.jekyllCssFiles))
     .pipe(gulp.dest(paths.siteCssFiles))
+    .pipe(rev.manifest(paths.gulpFiles + '/rev-manifest.json', {
+      base: paths.gulpFiles,
+      merge: true
+    }))
+    .pipe(gulp.dest(paths.gulpFiles))
     .pipe(browserSync.stream())
     .on('error', log.error);
 });
@@ -52,7 +60,7 @@ gulp.task('build:styles:critical', function() {
 
 // Remove unused classes in CSS
 gulp.task('build:styles:uncss', function() {
-  return gulp.src(paths.siteCssFiles + '/main.css')
+  return gulp.src(paths.siteCssFiles + '/*.css')
     .pipe(postcss([uncss({
       html: ['./_site/**/*.html'],
       htmlroot: paths.siteDir,
@@ -66,7 +74,7 @@ gulp.task('build:styles:uncss', function() {
 
 // Gzip's main CSS file
 gulp.task('build:styles:compress', function() {
-  return gulp.src(paths.jekyllCssFiles + '/main.css')
+  return gulp.src(paths.jekyllCssFiles + '/*.css')
     .pipe(gzip({ append: false }))
     .pipe(gulp.dest(paths.jekyllCssFiles))
     .pipe(gulp.dest(paths.siteCssFiles));
@@ -89,8 +97,11 @@ gulp.task('build:scripts:main', function() {
   ])
       .pipe(concat('main.js'))
       .pipe(uglify())
+      .pipe(rev())
       .pipe(gulp.dest(paths.jekyllJsFiles))
       .pipe(gulp.dest(paths.siteJsFiles))
+      .pipe(rev.manifest())
+      .pipe(gulp.dest(paths.gulpFiles))
       .on('error', log.error);
 });
 
@@ -101,21 +112,19 @@ gulp.task('build:scripts:analytics', function() {
     .pipe(vinylPaths(del))
     .pipe(rename('google-analytics.js'))
     .pipe(uglify())
+    .pipe(rev())
     .pipe(gulp.dest(paths.jekyllJsFiles))
-    .pipe(gulp.dest(paths.siteJsFiles));
+    .pipe(gulp.dest(paths.siteJsFiles))
+    .pipe(rev.manifest(paths.gulpFiles + '/rev-manifest.json', {
+      base: paths.gulpFiles,
+      merge: true
+    }))
+    .pipe(gulp.dest(paths.gulpFiles));
 });
 
 // Gzip's main JS file
-gulp.task('build:scripts:compress:main', function() {
-  return gulp.src(paths.jekyllJsFiles + '/main.js')
-    .pipe(gzip({ append: false }))
-    .pipe(gulp.dest(paths.jekyllJsFiles))
-    .pipe(gulp.dest(paths.siteJsFiles));
-});
-
-// Gzip's Google Analytics JS file
-gulp.task('build:scripts:compress:analytics', function() {
-  return gulp.src(paths.jekyllJsFiles + '/google-analytics.js')
+gulp.task('build:scripts:compress', function() {
+  return gulp.src(paths.jekyllJsFiles + '/*.js')
     .pipe(gzip({ append: false }))
     .pipe(gulp.dest(paths.jekyllJsFiles))
     .pipe(gulp.dest(paths.siteJsFiles));
@@ -123,12 +132,12 @@ gulp.task('build:scripts:compress:analytics', function() {
 
 // Deletes processed JS.
 gulp.task('clean:scripts', function(done) {
-  del([paths.jekyllJsFiles + '/main.js', paths.siteJsFiles + '/main.js']);
+  del([paths.jekyllJsFiles + '/*.js', paths.siteJsFiles + '/*.js']);
   done();
 });
 
 // Builds all scripts.
-gulp.task('build:scripts', gulp.parallel('build:scripts:main', 'build:scripts:analytics'));
+gulp.task('build:scripts', gulp.series('build:scripts:main', 'build:scripts:analytics'));
 
 // Optimizes images.
 gulp.task('build:images:main', function() {
@@ -188,7 +197,15 @@ gulp.task('clean:fonts', function(done) {
   done();
 });
 
-gulp.task('build:compress', gulp.parallel('build:styles:compress', 'build:scripts:compress:main', 'build:scripts:compress:analytics'));
+gulp.task('build:compress', gulp.parallel('build:styles:compress', 'build:scripts:compress'));
+
+gulp.task('build:rev-rewrite', function() {
+  var manifest = gulp.src('./_assets/gulp/rev-manifest.json');
+
+  return gulp.src(paths.siteHtmlFilesGlob)
+    .pipe(revRewrite({ manifest }))
+    .pipe(gulp.dest(paths.siteDir));
+});
 
 gulp.task('build:jekyll', function(done) {
   return cp.spawn('bundle', ['exec', 'jekyll', 'build'], {stdio: 'inherit'})
@@ -211,10 +228,10 @@ gulp.task('clean:jekyll', function(done) {
 gulp.task('clean', gulp.parallel('clean:jekyll', 'clean:images', 'clean:scripts', 'clean:fonts', 'clean:styles'));
 
 // Builds site anew.
-gulp.task('build', gulp.series('clean', gulp.parallel('build:scripts', 'build:images', 'build:styles', 'build:fonts'), 'build:jekyll', 'build:styles:uncss', 'build:compress', 'deploy:aws'));
+gulp.task('build', gulp.series('clean', 'build:scripts', gulp.parallel('build:images', 'build:styles', 'build:fonts'), 'build:jekyll', 'build:rev-rewrite', 'build:styles:uncss', 'build:compress', 'deploy:aws'));
 
 // Builds site anew.
-gulp.task('build-dev', gulp.series('clean', gulp.parallel('build:scripts', 'build:images', 'build:styles', 'build:fonts'), 'build:jekyll', 'build:styles:uncss'));
+gulp.task('build-dev', gulp.series('clean', 'build:scripts', gulp.parallel('build:images', 'build:styles', 'build:fonts'), 'build:jekyll', 'build:rev-rewrite', 'build:styles:uncss'));
 
 // Special tasks for building and then reloading BrowserSync.
 gulp.task('build:jekyll:watch', gulp.series('build:jekyll', function(done) {

@@ -41,7 +41,8 @@ defaults:
 # Build settings
 destination: _site
 paginate: 10
-permalink: /:year/:title/
+paginate_path: "/blog/page:num/"
+permalink: /post/:title/
 markdown: kramdown
 highlighter: rouge
 future: false
@@ -50,4 +51,4 @@ kramdown:
   input: GFM
 
 plugins: ['jekyll-paginate', 'jekyll-sitemap']
-exclude: ['Gemfile', 'Gemfile.lock', '.DS_Store', 's3_website.yml', 'template.md', 'package.json', 'package-lock.json', 'node_modules', 'gulpfile.js']
+exclude: ['Gemfile', 'Gemfile.lock', '.DS_Store', 's3_website.yml', 'template.md', 'package.json', 'package-lock.json', 'node_modules', 'gulpfile.js', 'rev-manifest.json']

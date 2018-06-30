@@ -14,12 +14,14 @@ paths.fontFolderName   = 'fonts';
 paths.imageFolderName  = 'img';
 paths.scriptFolderName = 'js';
 paths.stylesFolderName = 'style';
+paths.gulpFolderName   = 'gulp';
 
 // Asset files locations.
 paths.sassFiles   = paths.assetsDir + paths.stylesFolderName;
 paths.jsFiles     = paths.assetsDir + paths.scriptFolderName;
 paths.imageFiles  = paths.assetsDir + paths.imageFolderName;
 paths.fontFiles   = paths.assetsDir + paths.fontFolderName;
+paths.gulpFiles   = paths.assetsDir + paths.gulpFolderName;
 
 // Jekyll files locations.
 paths.jekyllPostFiles  = paths.jekyllDir       + paths.postFolderName;
