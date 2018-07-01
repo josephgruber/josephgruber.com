@@ -5,7 +5,6 @@ var concat        = require('gulp-concat');
 var cp            = require('child_process');
 var critical      = require('critical');
 var del           = require('del');
-var download      = require('gulp-download');
 var gulp          = require('gulp');
 var gzip          = require('gulp-gzip');
 var imagemin      = require('gulp-imagemin');
@@ -18,7 +17,6 @@ var revRewrite    = require('gulp-rev-rewrite');
 var sass          = require('gulp-ruby-sass');
 var uglify        = require('gulp-uglify');
 var uncss         = require('postcss-uncss');
-var vinylPaths    = require('vinyl-paths');
 var webp          = require('imagemin-webp');
 
 // Include paths file.
@@ -31,7 +29,8 @@ gulp.task('build:styles', function() {
     style: 'compressed',
     trace: true,
     loadPath: [paths.sassFiles]
-  }).pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
+  })
+    .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
     .pipe(cleancss())
     .pipe(rev())
     .pipe(gulp.dest(paths.jekyllCssFiles))
@@ -90,7 +89,7 @@ gulp.task('clean:styles', function(done) {
 
 // Concatenates and uglifies global JS files and outputs result to the
 // appropriate location.
-gulp.task('build:scripts:main', function() {
+gulp.task('build:scripts', function() {
   return gulp.src([
       paths.jsFiles + '/lib' + paths.jsPattern,
       paths.jsFiles + '/*.js'
@@ -100,26 +99,11 @@ gulp.task('build:scripts:main', function() {
       .pipe(rev())
       .pipe(gulp.dest(paths.jekyllJsFiles))
       .pipe(gulp.dest(paths.siteJsFiles))
-      .pipe(rev.manifest())
+      .pipe(rev.manifest(paths.gulpFiles + '/rev-manifest.json', {
+        base: paths.gulpFiles
+      }))
       .pipe(gulp.dest(paths.gulpFiles))
       .on('error', log.error);
-});
-
-// Download latest version of Google Analytics JavaScript file for caching
-gulp.task('build:scripts:analytics', function() {
-  return download('https://www.googletagmanager.com/gtag/js?id=UA-12826609-1')
-    .pipe(gulp.dest(paths.jekyllJsFiles))
-    .pipe(vinylPaths(del))
-    .pipe(rename('google-analytics.js'))
-    .pipe(uglify())
-    .pipe(rev())
-    .pipe(gulp.dest(paths.jekyllJsFiles))
-    .pipe(gulp.dest(paths.siteJsFiles))
-    .pipe(rev.manifest(paths.gulpFiles + '/rev-manifest.json', {
-      base: paths.gulpFiles,
-      merge: true
-    }))
-    .pipe(gulp.dest(paths.gulpFiles));
 });
 
 // Gzip's main JS file
@@ -135,9 +119,6 @@ gulp.task('clean:scripts', function(done) {
   del([paths.jekyllJsFiles + '/*.js', paths.siteJsFiles + '/*.js']);
   done();
 });
-
-// Builds all scripts.
-gulp.task('build:scripts', gulp.series('build:scripts:main', 'build:scripts:analytics'));
 
 // Optimizes images.
 gulp.task('build:images:main', function() {
