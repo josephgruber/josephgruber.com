@@ -5,6 +5,7 @@ var concat        = require('gulp-concat');
 var cp            = require('child_process');
 var critical      = require('critical');
 var del           = require('del');
+var gm            = require('gulp-gm');
 var gulp          = require('gulp');
 var gzip          = require('gulp-gzip');
 var imagemin      = require('gulp-imagemin');
@@ -123,6 +124,9 @@ gulp.task('clean:scripts', function(done) {
 // Optimizes images.
 gulp.task('build:images:main', function() {
   return gulp.src(paths.imageFilesGlob)
+    .pipe(gm(function(gmfile) {
+      return gmfile.resize(1920, null, '^>');
+    }))
     .pipe(imagemin([
       imagemin.gifsicle('interlaced: true'),
       imagemin.optipng('optimizationLevel: 5'),
