@@ -8,3 +8,4 @@ node_modules
 assets
 _includes/critical.css
 rev-manifest.json
+.vscode/
