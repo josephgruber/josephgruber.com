@@ -1,0 +1,9 @@
+deploy:
+  image: python:latest
+  before_script:
+    - pip install awscli
+  script:
+    - aws s3 sync ./ s3://$S3_BUCKET_NAME --delete
+    - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+  only:
+    - master
