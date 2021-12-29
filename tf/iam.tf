@@ -7,7 +7,7 @@ resource "aws_iam_role" "lambda_ses_forwarder" {
   assume_role_policy = file("templates/iam-ses-trust.json")
 
   inline_policy {
-    name   = "oneClick_lambda_basic_execution_1529955340135"
+    name   = "ses-forwarder"
     policy = templatefile("templates/iam-ses-forwarder-policy.json", { bucket = "${var.domain}-email" })
   }
 }

@@ -19,17 +19,7 @@
         {
             "Effect": "Allow",
             "Action": ["s3:PutObject", "s3:GetObject"],
-            "Resource": "arn:aws:s3:::gebdominion.org-email/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": ["s3:PutObject", "s3:GetObject"],
             "Resource": "arn:aws:s3:::bluemarble.photography-email/*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": ["s3:PutObject", "s3:GetObject"],
-            "Resource": "arn:aws:s3:::milehigh.space-email/*"
         },
         {
             "Effect": "Allow",
