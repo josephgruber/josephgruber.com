@@ -16,6 +16,6 @@ resource "aws_lambda_function" "ses_forwarder" {
   filename         = data.archive_file.lambda_zip_file.output_path
   source_code_hash = data.archive_file.lambda_zip_file.output_base64sha256
 
-  runtime = "nodejs10.x"
+  runtime = "nodejs12.x"
   timeout = "10"
 }
