@@ -1,6 +1,6 @@
 data "archive_file" "lambda_zip_file" {
   type        = "zip"
-  output_path = "/tmp/lambda.zip"
+  output_path = "/tmp/lambda-${var.domain}.zip"
 
   source {
     content  = file("lambda/index.js")

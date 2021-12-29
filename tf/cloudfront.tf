@@ -1,21 +1,19 @@
 data "aws_cloudfront_cache_policy" "cache_policy" {
   name = "Managed-CachingOptimized"
 }
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "access-identity-${var.domain}"
+}
 
 resource "aws_cloudfront_distribution" "distribution" {
   origin {
-    domain_name         = aws_s3_bucket.main.website_endpoint
+    domain_name         = aws_s3_bucket.main.bucket_regional_domain_name
     origin_id           = "S3-${var.domain}"
     connection_attempts = 3
     connection_timeout  = 10
 
-    custom_origin_config {
-      http_port                = 80
-      https_port               = 443
-      origin_keepalive_timeout = 5
-      origin_protocol_policy   = "http-only"
-      origin_read_timeout      = 30
-      origin_ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
     }
   }
   enabled             = true
@@ -41,7 +39,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate_validation.validation.certificate_arn
     ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2019"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
 }
