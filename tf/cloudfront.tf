@@ -29,6 +29,11 @@ resource "aws_cloudfront_distribution" "distribution" {
     target_origin_id       = "S3-${var.domain}"
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.default_root_object.arn
+    }
   }
 
   restrictions {
@@ -41,5 +46,11 @@ resource "aws_cloudfront_distribution" "distribution" {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
+}
 
+resource "aws_cloudfront_function" "default_root_object" {
+  name    = "default-root-object"
+  runtime = "cloudfront-js-1.0"
+  publish = true
+  code    = file("cloudfront_functions/default-root-object.js")
 }
