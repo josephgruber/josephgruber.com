@@ -1,5 +1,6 @@
 include:
-  - template: Terraform/Base.gitlab-ci.yml 
+  - template: Terraform/Base.latest.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Terraform/Base.latest.gitlab-ci.yml
+  - template: Jobs/SAST-IaC.latest.gitlab-ci.yml
 
 variables:
   TF_STATE_NAME: terraform
@@ -7,27 +8,32 @@ variables:
   TF_ROOT: ${CI_PROJECT_DIR}/tf
 
 stages:
-  - init
   - validate
+  - test
   - build
   - deploy
 
-init:
-  extends: .init
+fmt:
+  extends: .terraform:fmt
+  needs: []
 
 validate:
-  extends: .validate
+  extends: .terraform:validate
+  needs: []
 
 build:
-  extends: .build
+  extends: .terraform:build
   artifacts:
     paths:
       - ${PWD}/*.zip
 
 deploy:
-  extends: .deploy
+  extends: .terraform:deploy
   dependencies:
     - build
+  environment:
+    name: $TF_STATE_NAME
+
 
 deploy_site:
   stage: deploy
