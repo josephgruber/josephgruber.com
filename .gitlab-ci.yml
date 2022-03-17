@@ -1,3 +1,11 @@
+include:
+  - template: Terraform.latest.gitlab-ci.yml
+
+variables:
+  TF_STATE_NAME: terraform
+  TF_CACHE_KEY: terraform
+  TF_ROOT: tf
+
 deploy:
   image: python:latest
   before_script:
