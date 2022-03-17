@@ -1,10 +1,33 @@
 include:
-  - template: Terraform.latest.gitlab-ci.yml
+  - template: Terraform/Base.gitlab-ci.yml 
 
 variables:
   TF_STATE_NAME: terraform
   TF_CACHE_KEY: terraform
   TF_ROOT: ${CI_PROJECT_DIR}/tf
+
+stages:
+  - init
+  - validate
+  - build
+  - deploy
+
+init:
+  extends: .init
+
+validate:
+  extends: .validate
+
+build:
+  extends: .build
+  artifacts:
+    paths:
+      - ${PWD}/*.zip
+
+deploy:
+  extends: .deploy
+  dependencies:
+    - build
 
 deploy_site:
   stage: deploy
@@ -14,10 +37,3 @@ deploy_site:
     - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
   only:
     - main
-
-build:
-  extends: .build
-  artifacts:
-    paths:
-      - ${PROJECT}/planfile
-      - ${PWD}/dist
