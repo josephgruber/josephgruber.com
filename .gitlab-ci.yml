@@ -25,7 +25,8 @@ build:
   extends: .terraform:build
   artifacts:
     paths:
-      - ${PWD}/*.zip
+      - ${TF_ROOT}/*.zip
+
 
 deploy:
   extends: .terraform:deploy
