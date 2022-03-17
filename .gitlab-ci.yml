@@ -14,3 +14,10 @@ deploy_site:
     - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
   only:
     - main
+
+build:
+  extends: .build
+  artifacts:
+    paths:
+      - ${PROJECT}/planfile
+      - ${PWD}/dist
