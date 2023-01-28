@@ -10,11 +10,13 @@ stages:
 variables:
   TF_ROOT: ${CI_PROJECT_DIR}/tf
 
-deploy_site:
+deploy:src:
   stage: deploy
+  needs: ["deploy"]
   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
   script:
-    - aws s3 sync ./ s3://$S3_BUCKET_NAME --delete --exclude '.git/*' --exclude '.gitlab-ci.yml' --exclude 'tf/*'
+    - cd ${CI_PROJECT_DIR}/src
+    - aws s3 sync . s3://$S3_BUCKET_NAME --delete'
     - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
   only:
     - main
