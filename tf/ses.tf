@@ -44,8 +44,14 @@ resource "aws_ses_receipt_rule" "catch_all" {
   scan_enabled = true
 
   s3_action {
-    bucket_name       = "${var.domain}-email"
+    bucket_name       = aws_s3_bucket.email.bucket
     position          = 1
     object_key_prefix = "incoming"
+  }
+
+  lambda_action {
+    function_arn    = aws_lambda_function.ses_forwarder.arn
+    invocation_type = "Event"
+    position        = 2
   }
 }
