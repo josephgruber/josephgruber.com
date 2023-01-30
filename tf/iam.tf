@@ -8,7 +8,7 @@ resource "aws_iam_role" "lambda_ses_forwarder" {
 
   inline_policy {
     name   = "ses-forwarder"
-    policy = templatefile("templates/iam-ses-forwarder-policy.json", { bucket = "${var.domain}-email" })
+    policy = templatefile("templates/iam-ses-forwarder-policy.tftpl", { bucket = "${var.domain}-email" })
   }
 }
 
