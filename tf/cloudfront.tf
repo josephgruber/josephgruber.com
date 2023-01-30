@@ -6,7 +6,6 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
   name = "Managed-CachingOptimized"
 }
 
-
 resource "aws_cloudfront_distribution" "distribution" { #tfsec:ignore:aws-cloudfront-enable-logging tfsec:ignore:aws-cloudfront-enable-waf
   aliases             = concat([var.domain], var.domain_aliases)
   default_root_object = "index.html"
@@ -27,6 +26,11 @@ resource "aws_cloudfront_distribution" "distribution" { #tfsec:ignore:aws-cloudf
     compress               = true
     target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "redirect-to-https"
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.default_root_object.arn
+    }
   }
 
   restrictions {
@@ -34,13 +38,6 @@ resource "aws_cloudfront_distribution" "distribution" { #tfsec:ignore:aws-cloudf
       restriction_type = "none"
     }
   }
-
-
-  function_association {
-    event_type   = "viewer-request"
-    function_arn = aws_cloudfront_function.default_root_object.arn
-  }
-
 
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.certificate.arn
