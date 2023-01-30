@@ -25,6 +25,6 @@ resource "aws_lambda_permission" "allow_ses" {
   action         = "lambda:InvokeFunction"
   function_name  = aws_lambda_function.ses_forwarder.function_name
   principal      = "ses.amazonaws.com"
-  source_arn     = "${aws_ses_receipt_rule_set.default_rule_set.arn}/*"
+  source_arn     = aws_ses_receipt_rule.catch_all.arn
   source_account = data.aws_caller_identity.account.account_id
 }

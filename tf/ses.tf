@@ -48,10 +48,4 @@ resource "aws_ses_receipt_rule" "catch_all" {
     position          = 1
     object_key_prefix = "incoming"
   }
-
-  lambda_action {
-    function_arn    = aws_lambda_function.ses_forwarder.arn
-    invocation_type = "Event"
-    position        = 2
-  }
 }
