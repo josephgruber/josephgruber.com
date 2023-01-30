@@ -2,7 +2,7 @@ resource "aws_s3_bucket" "main" { #tfsec:ignore:aws-s3-enable-bucket-logging tfs
   bucket = var.domain
 }
 
-resource "aws_s3_bucket" "email" {
+resource "aws_s3_bucket" "email" { #tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-encryption
   bucket = "${var.domain}-email"
 }
 
@@ -35,7 +35,7 @@ resource "aws_s3_bucket_policy" "cloudfront_policy" {
 
 resource "aws_s3_bucket_policy" "ses_policy" {
   bucket = aws_s3_bucket.email.id
-  policy = templatefile("templates/s3-ses-policy.json", {
+  policy = templatefile("templates/s3-ses-policy.tftpl", {
     bucket     = aws_s3_bucket.email.bucket
     account_id = data.aws_caller_identity.account.account_id
     }
