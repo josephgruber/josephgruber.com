@@ -54,7 +54,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "email_lifecycle" {
     }
 
     abort_incomplete_multipart_upload {
-      days_after_initiation = 0
+      days_after_initiation = 1
     }
     expiration {
       days                         = 7
