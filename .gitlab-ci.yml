@@ -10,6 +10,15 @@ stages:
 variables:
   TF_ROOT: ${CI_PROJECT_DIR}/tf
 
+build:
+  extends: .terraform:build
+  artifacts:
+    paths:
+      - ${TF_ROOT}/*.zip
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+
 deploy:src:
   stage: deploy
   needs: ["deploy"]
