@@ -6,6 +6,11 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
   name = "Managed-CachingOptimized"
 }
 
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "access-identity-${var.domain}"
+}
+
+
 resource "aws_cloudfront_distribution" "distribution" { #tfsec:ignore:aws-cloudfront-enable-logging tfsec:ignore:aws-cloudfront-enable-waf
   aliases             = concat([var.domain], var.domain_aliases)
   default_root_object = "index.html"
