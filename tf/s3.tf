@@ -1,8 +1,8 @@
-resource "aws_s3_bucket" "main" { #tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-encryption
+resource "aws_s3_bucket" "main" { #tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning
   bucket = var.domain
 }
 
-resource "aws_s3_bucket" "email" { #tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-encryption
+resource "aws_s3_bucket" "email" { #tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning
   bucket = "${var.domain}-email"
 }
 
@@ -24,6 +24,25 @@ resource "aws_s3_bucket_public_access_block" "email" {
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_server_side_encryption_configuration" "main" { #tfsec:ignore:aws-s3-encryption-customer-key
+  bucket = aws_s3_bucket.main.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "email" { #tfsec:ignore:aws-s3-encryption-customer-key
+  bucket = aws_s3_bucket.email.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
 resource "aws_s3_bucket_policy" "cloudfront_policy" {
   bucket = aws_s3_bucket.main.id
   policy = templatefile("templates/s3-cf-oac-policy.tftpl", {
