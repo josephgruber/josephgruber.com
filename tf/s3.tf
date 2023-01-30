@@ -26,7 +26,7 @@ resource "aws_s3_bucket_public_access_block" "email" {
 
 resource "aws_s3_bucket_policy" "cloudfront_policy" {
   bucket = aws_s3_bucket.main.id
-  policy = templatefile("s3-cf-oac-policy.tftpl", {
+  policy = templatefile("templates/s3-cf-oac-policy.tftpl", {
     bucket_name  = aws_s3_bucket.main.id,
     account      = data.aws_caller_identity.account.account_id,
     distribution = aws_cloudfront_distribution.distribution.id
@@ -46,11 +46,16 @@ resource "aws_s3_bucket_lifecycle_configuration" "email_lifecycle" {
   bucket = aws_s3_bucket.email.id
 
   rule {
-    id                                     = "Delete Old Emails"
-    status                                 = "Enabled"
-    abort_incomplete_multipart_upload_days = 0
-    prefix                                 = "incoming/"
+    id     = "Delete Old Emails"
+    status = "Enabled"
 
+    filter {
+      prefix = "logs/"
+    }
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 0
+    }
     expiration {
       days                         = 7
       expired_object_delete_marker = false

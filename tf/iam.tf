@@ -4,7 +4,7 @@ data "aws_iam_policy" "AmazonSESFullAccess" {
 
 resource "aws_iam_role" "lambda_ses_forwarder" {
   name               = "LamdaSESForward"
-  assume_role_policy = file("templates/iam-ses-trust.json")
+  assume_role_policy = file("templates/iam-ses-trust.tftpl")
 
   inline_policy {
     name   = "ses-forwarder"

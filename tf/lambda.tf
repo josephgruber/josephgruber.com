@@ -8,7 +8,7 @@ data "archive_file" "lambda_zip_file" {
   }
 }
 
-resource "aws_lambda_function" "ses_forwarder" {
+resource "aws_lambda_function" "ses_forwarder" { #tfsec:ignore:aws-lambda-enable-tracing
   function_name = "SesForwarder"
   role          = aws_iam_role.lambda_ses_forwarder.arn
   handler       = "index.handler"
