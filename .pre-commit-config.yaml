@@ -19,6 +19,7 @@ repos:
       - id: forbid-submodules
       - id: name-tests-test
       - id: pretty-format-json
+        args: ["--no-sort-keys"]
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.77.0
