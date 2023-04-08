@@ -35,6 +35,10 @@ resource "aws_ses_receipt_rule_set" "default_rule_set" {
   rule_set_name = "default-rule-set"
 }
 
+resource "aws_ses_active_receipt_rule_set" "default_rule_set" {
+  rule_set_name = aws_ses_receipt_rule_set.default_rule_set.rule_set_name
+}
+
 resource "aws_ses_receipt_rule" "catch_all" {
   name          = "${var.domain}CatchAllEmailForwarding"
   rule_set_name = aws_ses_receipt_rule_set.default_rule_set.id
@@ -54,4 +58,8 @@ resource "aws_ses_receipt_rule" "catch_all" {
     invocation_type = "Event"
     position        = 2
   }
+}
+
+resource "aws_ses_email_identity" "gmail" {
+  email = "joseph.gruber@gmail.com"
 }
