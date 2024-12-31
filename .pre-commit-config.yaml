@@ -22,9 +22,14 @@ repos:
         args: ["--no-sort-keys"]
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.0
+    rev: v1.92.0
     hooks:
       - id: terraform_fmt
-      - id: terraform_validate
+        args:
+          - --args=-write=true
       - id: terraform_tflint
-      - id: terraform_tfsec
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.config/.tflint.hcl
+      - id: terraform_trivy
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.config/trivy.yml
