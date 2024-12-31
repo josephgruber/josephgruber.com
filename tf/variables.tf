@@ -25,15 +25,16 @@ variable "domain_aliases" {
 
 variable "mx_records" {
   description = "MX DNS records"
-  type        = string
-  default     = "10 inbound-smtp.us-east-1.amazonaws.com"
+  type        = list(string)
+  default     = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
 }
 
-variable "site_verification" {
+variable "txt_records" {
   description = "Site verification records"
   type        = list(any)
   default = [
     "google-site-verification=IgYNA6ZF1v4tKlzDKi5j8EmhLMoD_-CXw4WIlq18TR8",
-    "keybase-site-verification=i3YjqbxTTC3g1AYgjtO2P14KfeSpbWAotr51sNHB-5k"
+    "keybase-site-verification=i3YjqbxTTC3g1AYgjtO2P14KfeSpbWAotr51sNHB-5k",
+    "v=spf1 include:spf.messagingengine.com ?all"
   ]
 }
