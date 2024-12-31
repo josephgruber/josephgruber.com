@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "main" { #tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning
+resource "aws_s3_bucket" "main" { # trivy:ignore:AVD-AWS-0320 # trivy:ignore:AVD-AWS-0090
   bucket = var.domain
 }
 
@@ -11,7 +11,7 @@ resource "aws_s3_bucket_public_access_block" "main" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_server_side_encryption_configuration" "main" { #tfsec:ignore:aws-s3-encryption-customer-key
+resource "aws_s3_bucket_server_side_encryption_configuration" "main" { # trivy:ignore:AVD-AWS-0132
   bucket = aws_s3_bucket.main.bucket
 
   rule {
@@ -190,7 +190,7 @@ data "aws_cloudfront_cache_policy" "cache_policy" {
   name = "Managed-CachingOptimized"
 }
 
-resource "aws_cloudfront_distribution" "distribution" { #tfsec:ignore:aws-cloudfront-enable-logging tfsec:ignore:aws-cloudfront-enable-waf
+resource "aws_cloudfront_distribution" "distribution" { # trivy:ignore:AVD-AWS-0011 # trivy:ignore:AVD-AWS-0010
   aliases             = concat([var.domain], var.domain_aliases)
   default_root_object = "index.html"
   enabled             = true
