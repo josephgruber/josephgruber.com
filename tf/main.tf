@@ -150,6 +150,16 @@ resource "aws_route53_record" "mx" {
   records = var.mx_records
 }
 
+resource "aws_route53_record" "dkim" {
+  for_each = toset(["fm1", "fm2", "fm3"])
+
+  zone_id = aws_route53_zone.zone.zone_id
+  name    = "${each.value}._domainkey"
+  records = ["${each.value}.${var.domain}.dkim.fmhosted.com"]
+  type    = "CNAME"
+  ttl     = "3600"
+}
+
 resource "aws_route53_record" "txt" {
   zone_id = aws_route53_zone.zone.zone_id
   name    = var.domain
