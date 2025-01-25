@@ -154,10 +154,18 @@ resource "aws_route53_record" "dkim" {
   for_each = toset(["fm1", "fm2", "fm3"])
 
   zone_id = aws_route53_zone.zone.zone_id
-  name    = "${each.value}._domainkey"
+  name    = "${each.value}._domainkey.${var.domain}"
   records = ["${each.value}.${var.domain}.dkim.fmhosted.com"]
   type    = "CNAME"
   ttl     = "3600"
+}
+
+resource "aws_route53_record" "dmarc" {
+  zone_id = aws_route53_zone.zone.zone_id
+  name    = "_dmarc.${var.domain}"
+  type    = "TXT"
+  ttl     = "3600"
+  records = ["v=DMARC1; p=quarantine; pct=100; rua=mailto:re+x4hdrmbajgx@dmarc.postmarkapp.com; sp=none; aspf=r;"]
 }
 
 resource "aws_route53_record" "txt" {
