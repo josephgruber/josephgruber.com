@@ -298,27 +298,3 @@ resource "aws_route53_record" "acm_cert_validation" {
   type            = each.value.type
   zone_id         = each.value.zone_id
 }
-
-resource "aws_ses_domain_identity" "domain" {
-  domain = var.domain
-}
-
-resource "aws_ses_domain_identity_verification" "identity_verification" {
-  domain = aws_ses_domain_identity.domain.id
-}
-
-resource "aws_ses_domain_dkim" "dkim" {
-  domain = aws_ses_domain_identity.domain.domain
-}
-
-resource "aws_ses_receipt_rule_set" "default_rule_set" {
-  rule_set_name = "default-rule-set"
-}
-
-resource "aws_ses_active_receipt_rule_set" "default_rule_set" {
-  rule_set_name = aws_ses_receipt_rule_set.default_rule_set.rule_set_name
-}
-
-resource "aws_ses_email_identity" "gmail" {
-  email = "joseph.gruber@gmail.com"
-}
