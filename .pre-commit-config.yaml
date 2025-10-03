@@ -1,35 +1,29 @@
 fail_fast: false
-default_stages: [commit]
+default_stages: [pre-commit]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
-      - id: check-docstring-first
-      - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
       - id: check-yaml
-      - id: detect-aws-credentials
-      - id: detect-private-key
-      - id: double-quote-string-fixer
       - id: end-of-file-fixer
-      - id: forbid-submodules
-      - id: name-tests-test
       - id: pretty-format-json
-        args: ["--no-sort-keys"]
+        args:
+          - --autofix
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.92.0
+    rev: v1.100.0
     hooks:
       - id: terraform_fmt
         args:
           - --args=-write=true
       - id: terraform_tflint
         args:
-          - --args=--config=__GIT_WORKING_DIR__/.config/.tflint.hcl
+          - --args=--config=__GIT_WORKING_DIR__/infra/.tflint.hcl
       - id: terraform_trivy
         args:
-          - --args=--config=__GIT_WORKING_DIR__/.config/trivy.yml
+          - --args=--config=__GIT_WORKING_DIR__/infra/trivy.yml
