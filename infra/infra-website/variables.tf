@@ -1,15 +1,16 @@
+variable "default_tags" {
+  default = {
+    "ManagedBy" = "Terraform"
+    "Project"   = "josephgruber.com"
+  }
+  description = "Key-value map of default tags to add to resources"
+  type        = map(string)
+}
+
 variable "aws_region" {
   default     = "us-east-1"
   description = "AWS region"
   type        = string
-}
-
-variable "tags" {
-  default = {
-    Project = "josephgruber.com"
-  }
-  description = "Default AWS tags"
-  type        = map(string)
 }
 
 variable "domain" {
@@ -21,11 +22,14 @@ variable "domain" {
 variable "domain_aliases" {
   default     = ["www.josephgruber.com"]
   description = "Website domain aliases"
-  type        = list(any)
+  type        = list(string)
 }
 
 variable "mx_records" {
-  default     = ["10 in1-smtp.messagingengine.com", "20 in2-smtp.messagingengine.com"]
+  default = [
+    "10 in1-smtp.messagingengine.com",
+    "20 in2-smtp.messagingengine.com"
+  ]
   description = "MX DNS records"
   type        = list(string)
 }
@@ -38,4 +42,10 @@ variable "txt_records" {
   ]
   description = "Site verification records"
   type        = list(any)
+}
+
+variable "atproto_did" {
+  description = "DID for atproto integration"
+  type        = string
+  default     = "did=did:plc:65pufxvjifiq2flklfmvylld"
 }
