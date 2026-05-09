@@ -1,0 +1,73 @@
+html,
+body {
+    height: 100%;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+    font-family: Raleway, sans-serif;
+    font-size: 1em;
+}
+
+.main {
+    background: url(../images/cover-2x.jpg) no-repeat left top fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: #fff;
+}
+
+h1,
+h2,
+h3 {
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+    font-family: Comfortaa, cursive;
+    font-weight: lighter;
+    -webkit-font-smoothing: antialiased;
+}
+
+a,
+a:focus,
+a:hover {
+    color: #fff;
+}
+
+.cover-container {
+    max-width: 72em;
+}
+
+.cover {
+    padding: 0 1.5rem;
+}
+
+.profile-image {
+    margin-bottom: 0.5em;
+    border: 3px solid #fff;
+    border-radius: 100%;
+}
+
+.title {
+    letter-spacing: 4px;
+}
+
+#social a {
+    color: #999;
+    font-size: 1.5em;
+    letter-spacing: 0.7em;
+}
+
+#social a:hover {
+    color: #337ab7;
+}
+
+#sections .btn {
+    border-radius: 0.7em;
+    padding: 0.375em 1em;
+    margin: 0 0.15em;
+}

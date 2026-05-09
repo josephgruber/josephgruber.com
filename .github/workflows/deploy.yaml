@@ -1,0 +1,39 @@
+name: Deploy Website
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy-website:
+    name: Deploy to S3 and CloudFront
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: main
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@d979d5b3a71173a29b74b5b88418bfda9437d885 # v6.1.1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Get parameters from SSM
+        id: get-params
+        run: |
+          BUCKET_NAME=$(aws ssm get-parameter --name "/website/bucket-name" --query "Parameter.Value" --output text)
+          DISTRIBUTION_ID=$(aws ssm get-parameter --name "/website/cloudfront-distribution" --query "Parameter.Value" --output text)
+          echo "bucket-name=$BUCKET_NAME" >> $GITHUB_OUTPUT
+          echo "distribution-id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+
+      - name: Sync to S3
+        run: aws s3 sync . s3://${{ steps.get-params.outputs.bucket-name }} --delete --exclude '.github/*'
+
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id ${{ steps.get-params.outputs.distribution-id }} --paths "/*"
