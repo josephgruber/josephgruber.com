@@ -33,7 +33,7 @@ jobs:
           echo "distribution-id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
 
       - name: Sync to S3
-        run: aws s3 sync . s3://${{ steps.get-params.outputs.bucket-name }} --delete --exclude '.github/*'
+        run: aws s3 sync . s3://${{ steps.get-params.outputs.bucket-name }} --delete --exclude '.github/*' --exclude '.git/*'
 
       - name: Invalidate CloudFront
         run: aws cloudfront create-invalidation --distribution-id ${{ steps.get-params.outputs.distribution-id }} --paths "/*"
